@@ -1,0 +1,11 @@
+# 核心
+pytest>=7.0.0
+requests>=2.26.0
+PyYAML>=5.4.0
+allure-pytest>=2.9.0
+jsonpath>=0.82
+
+# 可选：通知、数据库等后续按需安装
+# DingtalkChatbot
+# PyMySQL
+# redis

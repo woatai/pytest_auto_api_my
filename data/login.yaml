@@ -1,0 +1,6 @@
+# 登录接口用例（下单主流程 - 登录）
+case_common:
+  allureEpic: 下单主流程
+  allureFeature: 登录模块
+  allureStory: 用户登录
+

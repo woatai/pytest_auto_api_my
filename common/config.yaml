@@ -1,0 +1,13 @@
+# 公共配置
+# 多环境域名配置
+env:
+  test: # 测试环境
+    host: "https://httpbin.org"
+  prod: # 生产环境
+    host: "https://httpbin.org"
+
+# 当前使用的环境
+current_env: test
+
+# 项目名称
+project_name: "接口自动化-下单主流程"

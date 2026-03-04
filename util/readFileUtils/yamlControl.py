@@ -3,8 +3,9 @@ import yaml
 
 from  common.setting import ensure_path_sep
 
-# 读写yaml文件
-class yamlControl():
+# 读yaml文件
+class yamlControl:
+    
     @staticmethod
     def read_yaml(path:str) -> dict:
         """读取yaml 文件,path可为相对项目根的路径""" 

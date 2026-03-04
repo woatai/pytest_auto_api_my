@@ -1,6 +1,6 @@
 import requests
 from urllib3 import request
-
+from common.config import HOST
 
 class RequestControl:
     def __init__(self) -> None:
@@ -10,6 +10,7 @@ class RequestControl:
     def send_request(
         self, method, url, headers=None, params=None, data=None, json=None, timeout=10
     ):
+        url = HOST.rstrip("/") + "/" + url.lstrip("/")
         try:
             response = self.session.request(
                 method=method.upper(),

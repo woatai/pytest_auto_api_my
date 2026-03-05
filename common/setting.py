@@ -4,9 +4,8 @@
 import os
 from typing import Text
 
-
 def root_path() -> Text:
-    """获取项目根路径"""
+    """拿到项目根路径 去掉两次文件名""" 
     return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 

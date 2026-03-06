@@ -24,4 +24,4 @@ login:
       jsonpath: $.url
       type: in
       value: /post
-      AssertType:
+      AssertType:       

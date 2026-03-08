@@ -9,7 +9,7 @@ class RequestControl:
 
     def send_request(
         self, method, url, headers=None, params=None, data=None, json=None, timeout=10
-    ):
+    ) -> dict:
         url = HOST.rstrip("/") + "/" + url.lstrip("/")
         try:
             response = self.session.request(

@@ -1,7 +1,7 @@
 ﻿from util.requestsUtils.requestControl import RequestControl
 
 
-def test_httpbin_get():
+def httpbin_get():
     # 测试request工具
     re = RequestControl()
     result = re.send_request(
@@ -10,7 +10,7 @@ def test_httpbin_get():
         params={"name" : "test"}
     )
 
-    print(result["body"])
+    # print(result["body"])
 
     assert result["status_code"] == 200
 

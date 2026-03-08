@@ -1,16 +1,6 @@
 # 登录测试
-import pytest
 import allure
-
-
-class TestLogin:
-    def test_login():
-        pass
-
-
-"""
 import pytest
-import allure
 
 from util.readFileUtils.get_yaml_data_analysis import get_case_list
 from util.requestsUtils.requestControl import RequestControl
@@ -18,8 +8,7 @@ from util.requestsUtils.requestControl import RequestControl
 
 @allure.epic("下单主流程")
 @allure.feature("完整流程")
-class TestOrderMainFlow:
-
+class TestLogin:
     @allure.story("登录")
     @pytest.mark.parametrize("case_id, case", get_case_list("login.yaml"))
     def test_login(self, case_id, case):
@@ -34,6 +23,4 @@ class TestOrderMainFlow:
             headers=headers,
             json=data
         )
-
         assert resp["status_code"] == case["assert"]["status_code"]
-"""

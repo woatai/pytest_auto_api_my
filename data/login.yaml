@@ -7,15 +7,15 @@ case_common:
 # 登录成功
 login: 
   host: ${{host()}}
-  url: /get
-  method: Get
+  url: /login
+  method: post
   headers:
     Content-Type: application/json;charset=UTF-8
   requestType: none
   is_run:
   data:
-    username: test_user
-    password: "123456"
+    account: 13420661909
+    password: "asdf123456"
   dependence_case: false
   dependence_case_data: []
   assert:

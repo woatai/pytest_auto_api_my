@@ -2,7 +2,7 @@
 # 多环境域名配置
 env:
   test: # 测试环境
-    host: "https://httpbin.org"
+    host: "https://v5.crmeb.net/api"
   prod: # 生产环境
     host: "https://httpbin.org"
 

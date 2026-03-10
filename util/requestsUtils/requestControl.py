@@ -34,6 +34,9 @@ class RequestControl:
             "status_code": response.status_code,
             "body": body,
             "text": response.text, 
-            "headers": dict(response.headers)
+            "headers": dict(response.headers),
+            "request_debug":{
+                
+            }
         }
         

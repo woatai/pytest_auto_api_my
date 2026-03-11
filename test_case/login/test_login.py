@@ -18,9 +18,22 @@ class TestLogin:
         data = case.get("data")
 
         resp = RequestControl().send_request(
-            method=method,
-            url=url,
-            headers=headers,
-            json=data
+            method=method, url=url, headers=headers, json=data
         )
         assert resp["status_code"] == case["assert"]["status_code"]
+
+
+"""
+调用
+from util.assertion.assert_control import AssertControl
+
+# ...
+resp = RequestControl().send_request(
+    method=method,
+    url=url,
+    headers=headers,
+    json=data
+)
+
+AssertControl(assert_data=case.get("assert"), response=resp).run()
+"""

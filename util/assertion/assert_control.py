@@ -13,29 +13,76 @@ class AssertControl:
         self.status_code = self.response.get("status_code")
         self.response_body = self.response.get("body")
         # 兼容后续在 RequestControl 里加的请求调试信息
-        # self.request_bug = self.response.get("request_debug", {})
+        self.request_bug = self.response.get("request_debug", {})
 
     def run(self) -> None:
         assert self.assert_data, " assert 配置不能为空 "
 
-        # 断言状态码
+        # 状态码的断言
+        self._assert_status_code()
+
+        # 业务断言
+        for name, rule in self.assert_data.items():
+            if name == "status_code":
+                continue
+            if not isinstance(rule, dict):
+                raise AssertionError(f"断言规则格式错误: {name}={rule}")
+            self._assert_json_rule(field_name=name, rule=rule)
 
     def _assert_status_code(self):
-        excepted = self.assert_data.get("status_code")
-        if excepted == None:
+        expected = self.assert_data.get("status_code")
+        if expected == None:
             return
 
-        assert self.status_code == excepted
+        assert self.status_code == expected, self._build_fail_msg(
+            field_name="status_code",
+            expected=expected,
+            actual=self.status_code,
+            op="eq",
+            jsonpath_expr=None,
+        )
+
+    # 根据jsonpath提取变量
+    def _assert_json_rule(self, field_name: str, rule: dict[str:any]):
+        jsonPah = self.rule.get("jsonpath")
+        type = self.rule.get("type").lower()
+        expected = self.rule.get("value")
+
+        # 提取实际值
+        actual =self._extract_jsonpath(self.response_body,jsonPah)
+        pass
+
+
+    # 在body去提取实际变量
+    def _extract_jsonpath(body:any,expr:str):
+        data = body
+
 
     # 拼接错误信息
     def _build_fail_msg(
         self,
         field_Name: str,  # 断言的字段名
-        excepted: any,  # 期望值
-        op: str,   # 断言操作符
-        jsonpath_expr: str | None  # JSONPath 断言
+        expected: any,  # 期望值
+        actual: any,  # 实际值
+        op: str,  # 断言操作符
+        jsonpath_expr: str | None,  # JSONPath 断言
     ) -> str:
-        pass
+        req_method = self.request_debug.get("method")
+        req_url = self.request_debug.get("url")
+        req_params = self.request_debug.get("params")
+        req_data = self.request_debug.get("data")
+        req_json = self.request_debug.get("json")
+        return (
+            f"\n[ASSERT FAIL] {field_Name} ({op})"
+            f"\n[ASSERT FAIL] expected={expected} actual={actual}"
+            f"\n[ASSERT FAIL] jsonpath={jsonpath_expr or 'N/A'}"
+            f"\n[REQUEST] method={req_method or 'N/A'} url={req_url or 'N/A'}"
+            f"\n[REQUEST] params={req_params or 'N/A'}"
+            f"\n[REQUEST] data={req_data or 'N/A'}"
+            f"\n[REQUEST] json={req_json or 'N/A'}"
+            f"\n[RESPONSE] status_code={self.status_code} body={self.response_body}"
+        )
+
 
 """
 from __future__ import annotations
@@ -144,19 +191,4 @@ class AssertControl:
             f"\n[REQUEST] json={req_json}"
             f"\n[RESPONSE] status_code={self.status_code}, body={self.response_body}"
         )
-"""
-
-"""
-调用
-from util.assertion.assert_control import AssertControl
-
-# ...
-resp = RequestControl().send_request(
-    method=method,
-    url=url,
-    headers=headers,
-    json=data
-)
-
-AssertControl(assert_data=case.get("assert"), response=resp).run()
 """

@@ -2,6 +2,7 @@ import requests
 from urllib3 import request
 from common.config import HOST
 
+
 class RequestControl:
     def __init__(self) -> None:
         # 使用session 方便以后 做登录保持
@@ -33,10 +34,13 @@ class RequestControl:
         return {
             "status_code": response.status_code,
             "body": body,
-            "text": response.text, 
+            "text": response.text,
             "headers": dict(response.headers),
-            "request_debug":{
-                
-            }
+            "request_debug": {
+                method: method,
+                url: url,
+                params: params,
+                data: data,
+                json: json,
+            },
         }
-        

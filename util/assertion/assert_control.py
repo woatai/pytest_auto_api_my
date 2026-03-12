@@ -3,7 +3,9 @@
 """
 
 from typing import Any, Dict
-
+import json
+from unittest import result
+from jsonpath import jsonpath
 
 class AssertControl:
 
@@ -42,21 +44,27 @@ class AssertControl:
             jsonpath_expr=None,
         )
 
-    # 根据jsonpath提取变量
+    # json断言
     def _assert_json_rule(self, field_name: str, rule: dict[str:any]):
-        jsonPah = self.rule.get("jsonpath")
-        type = self.rule.get("type").lower()
-        expected = self.rule.get("value")
+        jsonPah = rule.get("jsonpath")
+        type = rule.get("type").lower()
+        expected = rule.get("value")
 
         # 提取实际值
-        actual =self._extract_jsonpath(self.response_body,jsonPah)
-        pass
+        actual = self._extract_jsonpath(self.response_body, jsonPah)
+        
 
-
-    # 在body去提取实际变量
-    def _extract_jsonpath(body:any,expr:str):
+    # 通过jsonpath在body去提取实际变量
+    @staticmethod
+    def _extract_jsonpath(body: any, expr: str) -> any:
         data = body
-
+        if isinstance(data,str):
+            try:
+                data = json.loads(data) # 解析成python对象
+            except:
+                raise AssertionError(f"响应体不是 JSON,无法执行 jsonpath: {expr}. body={body}")
+        result = jsonpath(data,expr)
+        assert result not in (False,None) and len(result) >0 ,  f"jsonpath 提取失败: expr={expr}, body={data}" 
 
     # 拼接错误信息
     def _build_fail_msg(

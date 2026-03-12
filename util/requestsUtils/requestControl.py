@@ -37,10 +37,10 @@ class RequestControl:
             "text": response.text,
             "headers": dict(response.headers),
             "request_debug": {
-                method: method,
-                url: url,
-                params: params,
-                data: data,
-                json: json,
-            },
+                "method": method,
+                "url": url,
+                "params": params,
+                "data": data,
+                "json": json,
+            }
         }

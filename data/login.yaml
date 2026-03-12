@@ -14,14 +14,14 @@ login:
   requestType: none
   is_run:
   data:
-    account: 13420661909
+    account: 13423232323
     password: "asdf123456"
   dependence_case: false
   dependence_case_data: []
   assert:
     status_code: 200
-    url:
-      jsonpath: $.url
+    msg:
+      jsonpath: $.msg
       type: in
-      value: /post
+      value: 登录成功
       AssertType:       

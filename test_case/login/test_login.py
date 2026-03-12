@@ -4,7 +4,7 @@ import pytest
 
 from util.readFileUtils.get_yaml_data_analysis import get_case_list
 from util.requestsUtils.requestControl import RequestControl
-
+from util.assertion.assert_control import AssertControl
 
 @allure.epic("下单主流程")
 @allure.feature("完整流程")
@@ -20,12 +20,12 @@ class TestLogin:
         resp = RequestControl().send_request(
             method=method, url=url, headers=headers, json=data
         )
-        assert resp["status_code"] == case["assert"]["status_code"]
+        # 手动断言
+        # assert resp["status_code"] == case["assert"]["status_code"]
+        AssertControl(assert_data=case.get("assert"),response=resp).run()    
 
 
 """
-调用
-from util.assertion.assert_control import AssertControl
 
 # ...
 resp = RequestControl().send_request(

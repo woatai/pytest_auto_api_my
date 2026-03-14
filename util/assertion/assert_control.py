@@ -15,7 +15,7 @@ class AssertControl:
         self.status_code = self.response.get("status_code")
         self.response_body = self.response.get("body")
         # 兼容后续在 RequestControl 里加的请求调试信息
-        self.request_bug = self.response.get("request_debug", {})
+        self.request_debug = self.response.get("request_debug", {})
 
     def run(self) -> None:
         assert self.assert_data, " assert 配置不能为空 "
@@ -37,7 +37,7 @@ class AssertControl:
             return
 
         assert self.status_code == expected, self._build_fail_msg(
-            field_name="status_code",
+            field_name=self.assert_data.get('status_code'),
             expected=expected,
             actual=self.status_code,
             op="eq",
@@ -69,7 +69,7 @@ class AssertControl:
     # 拼接错误信息
     def _build_fail_msg(
         self,
-        field_Name: str,  # 断言的字段名
+        field_name: str,  # 断言的字段名
         expected: any,  # 期望值
         actual: any,  # 实际值
         op: str,  # 断言操作符
@@ -77,18 +77,19 @@ class AssertControl:
     ) -> str:
         req_method = self.request_debug.get("method")
         req_url = self.request_debug.get("url")
+        req_headers = self.request_debug.get("headers")
         req_params = self.request_debug.get("params")
         req_data = self.request_debug.get("data")
         req_json = self.request_debug.get("json")
         return (
-            f"\n[ASSERT FAIL] {field_Name} ({op})"
+            f"\n[ASSERT FAIL] {field_name} ({op})"
             f"\n[ASSERT FAIL] expected={expected} actual={actual}"
             f"\n[ASSERT FAIL] jsonpath={jsonpath_expr or 'N/A'}"
-            f"\n[REQUEST] method={req_method or 'N/A'} url={req_url or 'N/A'}"
+            f"\n[REQUEST] method={req_method or 'N/A'} url={req_url or 'N/A'} headers = {req_headers}"
             f"\n[REQUEST] params={req_params or 'N/A'}"
             f"\n[REQUEST] data={req_data or 'N/A'}"
             f"\n[REQUEST] json={req_json or 'N/A'}"
-            f"\n[RESPONSE] status_code={self.status_code} body={self.response_body}"
+            f"\n[RESPONSE] status_code={self.status_code} ,msg={self.response_body.get('msg')}"
         )
 
 

@@ -25,15 +25,4 @@ class TestLogin:
         AssertControl(assert_data=case.get("assert"),response=resp).run()    
 
 
-"""
 
-# ...
-resp = RequestControl().send_request(
-    method=method,
-    url=url,
-    headers=headers,
-    json=data
-)
-
-AssertControl(assert_data=case.get("assert"), response=resp).run()
-"""

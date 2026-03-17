@@ -1,6 +1,5 @@
 import requests
 from urllib3 import request, response
-from common.config import HOST
 
 
 class RequestControl:
@@ -13,8 +12,8 @@ class RequestControl:
     ) -> dict:
         if url.startswith("http"):
             url = url
-        else:
-            url = HOST.rstrip("/") + "/" + url.lstrip("/")
+        # else:
+        #     url = HOST.rstrip("/") + "/" + url.lstrip("/")
 
         # 先准备请求，异常时也能取到最终 headers
         req = requests.Request(

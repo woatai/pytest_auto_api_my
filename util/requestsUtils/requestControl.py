@@ -11,7 +11,10 @@ class RequestControl:
     def send_request(
         self, method, url, headers=None, params=None, data=None, json=None, timeout=10
     ) -> dict:
-        url = HOST.rstrip("/") + "/" + url.lstrip("/")
+        if url.startswith("http"):
+            url = url
+        else:
+            url = HOST.rstrip("/") + "/" + url.lstrip("/")
 
         # 先准备请求，异常时也能取到最终 headers
         req = requests.Request(

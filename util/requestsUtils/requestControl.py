@@ -37,7 +37,6 @@ class RequestControl:
             #     json=json,
             #     timeout=timeout,
             # )
-            # request_headers = dict(response.request.headers)
             response = self.session.send(prep, timeout=timeout)
             # 成功后用真实发送的 headers 覆盖
             request_headers = dict(response.request.headers)

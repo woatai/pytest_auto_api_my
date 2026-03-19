@@ -1,0 +1,57 @@
+case_common:
+  allureEpic: 下单主流程
+  allureFeature: 完整流程
+  allureStory: 用户正常下单
+
+# 登录
+login: 
+  host: ${{host()}}
+  url: /login
+  method: post
+  headers:
+    Content-Type: application/json;charset=UTF-8
+  requestType: none
+  is_run: true
+  data:
+    account: 13423232323
+    password: "asdf123456"
+  dependence_case: false
+  dependence_case_data: []
+  assert:
+    status_code: 200
+    msg:
+      jsonpath: $.msg
+      type: in
+      value: 登录成功
+
+# 查看商品列表
+product_list:
+  host: ${{host()}}
+  url: /home/products
+  method: get
+  headers:
+    Content-Type: application/json;charset=UTF-8
+  requestType: none
+  is_run: true
+  params:
+    ids: 
+    page: 1
+    limit: 14
+  dependence_case: false
+  dependence_case_data: []
+  assert:
+    status_code: 200
+
+# 查看商品详情
+product_detail: 
+  host: ${{host()}}
+  url: /product/detail/{id}
+  method: get
+  headers:
+    Content-Type: application/json;charset=UTF-8
+  requestType: none
+  is_run: true
+  dependence_case: false
+  dependence_case_data: []
+  assert:
+    status_code: 200

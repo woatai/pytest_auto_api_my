@@ -3,7 +3,6 @@ from math import isfinite
 import re
 
 from common.config import HOST
-# from common.config import HOST
 
 PLACEHOLDER_PATTERN = re.compile(r"\$\{\{([^}]+)\}\}")
 

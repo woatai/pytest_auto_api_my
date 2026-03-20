@@ -10,13 +10,14 @@ from util.assertion.assert_control import AssertControl
 @allure.feature("完整流程")
 class TestLogin:
     @allure.story("登录")
-    @pytest.mark.parametrize("case_id, case", get_case_list("login.yaml"))
+    # 把 get_case_list("login.yaml") 返回的每一组 参数名 (case_id, case)  数据依次传给 test_login，
+    @pytest.mark.parametrize("case_id, case", get_case_list("login.yaml")) 
     def test_login(self, case_id, case):
         url = case["url"]
         method = case["method"]
         headers = case.get("headers")
         data = case.get("data")
-
+ 
         resp = RequestControl().send_request(
             method=method, url=url, headers=headers, json=data
         )

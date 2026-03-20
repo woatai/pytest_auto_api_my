@@ -4,7 +4,7 @@ case_common:
   allureStory: 用户正常下单
 
 # 登录
-login: 
+login:
   host: ${{host()}}
   url: /login
   method: post
@@ -34,7 +34,7 @@ product_list:
   requestType: none
   is_run: true
   params:
-    ids: 
+    ids:
     page: 1
     limit: 14
   dependence_case: false
@@ -43,7 +43,88 @@ product_list:
     status_code: 200
 
 # 查看商品详情
-product_detail: 
+product_detail:
+  host: ${{host()}}
+  url: /product/detail/{id}
+  method: get
+  headers:
+    Content-Type: application/json;charset=UTF-8
+  requestType: none
+  is_run: true
+  dependence_case: false
+  dependence_case_data: []
+  assert:
+    status_code: 200
+
+# 默认价格
+default_price:
+  host: ${{host()}}
+  url: /product/detail/{id}
+  method: get
+  headers:
+    Content-Type: application/json;charset=UTF-8
+  requestType: none
+  is_run: true
+  dependence_case: false
+  dependence_case_data: []
+  assert:
+    status_code: 200
+
+# 个人中心
+user_center:
+  host: ${{host()}}
+  url: /user
+  method: get
+  headers:
+    Content-Type: application/json;charset=UTF-8
+  requestType: none
+  is_run: true
+  dependence_case: false
+  dependence_case_data: []
+  assert:
+    status_code:
+    
+# 直接购买
+buy_now:
+  host: ${{host()}}
+  url: /cart/add
+  method: get
+  headers:
+    Content-Type: application/json;charset=UTF-8
+  requestType: none
+  is_run: true
+  dependence_case: false
+  dependence_case_data: []
+  assert:
+    status_code: 200
+# 检查发货
+check_shipping:
+  host: ${{host()}}
+  url: /product/detail/{id}
+  method: get
+  headers:
+    Content-Type: application/json;charset=UTF-8
+  requestType: none
+  is_run: true
+  dependence_case: false
+  dependence_case_data: []
+  assert:
+    status_code: 200
+# 获取默认地址
+get_default_address:
+  host: ${{host()}}
+  url: /product/detail/{id}
+  method: get
+  headers:
+    Content-Type: application/json;charset=UTF-8
+  requestType: none
+  is_run: true
+  dependence_case: false
+  dependence_case_data: []
+  assert:
+    status_code: 200
+# 订单确认
+order_confirm:
   host: ${{host()}}
   url: /product/detail/{id}
   method: get

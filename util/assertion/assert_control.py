@@ -2,10 +2,8 @@
 断言类型封装
 """
 
-from fileinput import filename
 from typing import Any, Dict
 import json
-from unittest import result
 from jsonpath import jsonpath
 
 
@@ -35,11 +33,11 @@ class AssertControl:
 
     def _assert_status_code(self):
         expected = self.assert_data.get("status_code")
-        if expected == None:
+        if expected is None:
             return
 
         assert self.status_code == expected, self._build_fail_msg(
-            field_name=self.assert_data.get("status_code"),
+            field_name="status_code",
             expected=expected,
             actual=self.status_code,
             op="eq",
@@ -47,31 +45,35 @@ class AssertControl:
         )
 
     # json断言
-    def _assert_json_rule(self, field_name: str, rule: dict[str:any]):
+    def _assert_json_rule(self, field_name: str, rule: dict[str, Any]):
         jsonPah = rule.get("jsonpath")
-        type = rule.get("type").lower()
+        op = (rule.get("type") or "eq").lower()
         expected = rule.get("value")
 
         # 提取实际值
         actual = self._extract_jsonpath(self.response_body, jsonPah)
-        passed = self._compare(actual=actual, expected=expected, op=type)
 
-        assert passed,self._build_fail_msg(
+        if op == "exists":
+            return
+
+        passed = self._compare(actual=actual, expected=expected, op=op)
+
+        assert passed, self._build_fail_msg(
             field_name=field_name,
             expected=expected,
             actual=actual,
             jsonpath_expr=jsonPah,
-            op=type
+            op=op,
         )
 
     # 通过jsonpath在body去提取实际变量
     @staticmethod
-    def _extract_jsonpath(body: any, expr: str) -> any:
+    def _extract_jsonpath(body: Any, expr: str) -> Any:
         data = body
         if isinstance(data, str):
             try:
                 data = json.loads(data)  # 解析成python对象
-            except:
+            except json.JSONDecodeError:
                 raise AssertionError(
                     f"响应体不是 JSON,无法执行 jsonpath: {expr}. body={body}"
                 )
@@ -83,7 +85,7 @@ class AssertControl:
         return result[0]
 
     @staticmethod
-    def _compare(actual: str, expected: str, op: str) -> bool:
+    def _compare(actual: Any, expected: Any, op: str) -> bool:
         if op in ("eq", "==", "equals"):
             return actual == expected
         if op in ("ne", "!="):
@@ -92,13 +94,14 @@ class AssertControl:
             return str(expected) in str(actual)
         if op == "contains":
             return str(expected) in str(actual)
+        raise AssertionError(f"不支持的断言类型: {op}")
 
     # 拼接错误信息
     def _build_fail_msg(
         self,
         field_name: str,  # 断言的字段名
-        expected: any,  # 期望值
-        actual: any,  # 实际值
+        expected: Any,  # 期望值
+        actual: Any,  # 实际值
         op: str,  # 断言操作符
         jsonpath_expr: str | None,  # JSONPath 断言
     ) -> str:
@@ -116,7 +119,7 @@ class AssertControl:
             f"\n[REQUEST] params={req_params or 'N/A'}"
             f"\n[REQUEST] data={req_data or 'N/A'}"
             f"\n[REQUEST] json={req_json or 'N/A'}"
-            f"\n[RESPONSE] status_code={self.status_code} ,msg={self.response_body.get('msg')}"
+            f"\n[RESPONSE] status_code={self.status_code} ,body={self.response_body}"
         )
 
 

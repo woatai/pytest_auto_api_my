@@ -28,7 +28,16 @@ def get_case_list(yaml_name: str) -> list:
     for k, v in data.items():
         if k == "case_common" or not isinstance(v, dict):
             continue
-        merage = {**common, **v}  # 传入字典并 拼接字典
+        # 将 allrue yaml文件拼接到每个用例
+        merage = {**common, **v}  
         merage["case_id"] = k
         cases.append((k, merage))
     return cases
+
+# 获取case_id
+def get_case_by_id(yaml_name:str,case_id:str) -> dict:
+    cases = get_case_list(yaml_name)
+    for current_case_id,case in cases:
+        if current_case_id == case_id:
+            return case
+    return ValueError(f"未找到用例: {case_id}")

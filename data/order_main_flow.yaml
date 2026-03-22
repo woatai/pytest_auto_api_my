@@ -25,7 +25,7 @@ login:
       value: 登录成功
 
 # 查看商品列表
-product_list:
+product_list: # case_id
   host: ${{host()}}
   url: /home/products
   method: get
@@ -41,7 +41,14 @@ product_list:
   dependence_case_data: []
   assert:
     status_code: 200
-
+    msg:
+      jsonpath: $.msg
+      type: in
+      value: success 
+    product_id:
+      jsonpath: $.data.list[0].id
+      type: exists
+      
 # 查看商品详情
 product_detail:
   host: ${{host()}}

@@ -1,5 +1,4 @@
 import requests
-from urllib3 import request, response
 
 
 class RequestControl:
@@ -8,12 +7,12 @@ class RequestControl:
         self.session = requests.Session()
 
     def send_request(
-        self, method, url, headers=None, params=None, data=None, json=None, timeout=10
+        self, host,method, url, headers=None, params=None, data=None, json=None, timeout=10
     ) -> dict:
         if url.startswith("http"):
             url = url
-        # else:
-        #     url = HOST.rstrip("/") + "/" + url.lstrip("/")
+        else:
+            url = host.rstrip("/") + "/" + url.lstrip("/")
 
         # 先准备请求，异常时也能取到最终 headers
         req = requests.Request(
@@ -41,7 +40,20 @@ class RequestControl:
             # 成功后用真实发送的 headers 覆盖
             request_headers = dict(response.request.headers)
         except requests.RequestException as e:
-            return {"status_code": None, "body": None, "text": str(e), "headers": None}
+            return {
+                "status_code": None,
+                "body": None,
+                "text": str(e),
+                "headers": None,
+                "request_debug": {
+                    "method": method,
+                    "url": url,
+                    "headers": request_headers,
+                    "params": params,
+                    "data": data,
+                    "json": json,
+                },
+            }
         # 尝试解析 JSON
         try:
             body = response.json()

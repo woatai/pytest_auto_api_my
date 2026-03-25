@@ -48,6 +48,8 @@ product_list: # case_id
     product_id:
       jsonpath: $.data.list[0].id
       type: exists
+    extract:
+      product_id: $.data.list[0].id
       
 # 查看商品详情
 product_detail:

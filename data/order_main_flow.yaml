@@ -23,6 +23,9 @@ login:
       jsonpath: $.msg
       type: in
       value: 登录成功
+  extract:
+      token: $.data.token
+      
 
 # 查看商品列表
 product_list: # case_id
@@ -31,6 +34,7 @@ product_list: # case_id
   method: get
   headers:
     Content-Type: application/json;charset=UTF-8
+    Authorization: Bearer ${{token}}
   requestType: none
   is_run: true
   params:
@@ -48,27 +52,32 @@ product_list: # case_id
     product_id:
       jsonpath: $.data.list[0].id
       type: exists
-    extract:
-      product_id: $.data.list[0].id
+  extract:
+    product_id: $.data.list[0].id
       
 # 查看商品详情
 product_detail:
   host: ${{host()}}
-  url: /product/detail/{id}
+  url: /product/detail/${{product_id}}
   method: get
   headers:
     Content-Type: application/json;charset=UTF-8
+    Authorization: Bearer ${{token}}
   requestType: none
   is_run: true
   dependence_case: false
   dependence_case_data: []
   assert:
     status_code: 200
+    msg: 
+      jsonpath: $.msg
+      type: in
+      value: success 
 
 # 默认价格
 default_price:
   host: ${{host()}}
-  url: /product/detail/{id}
+  url: /product/detail/${{id}}/${{unique}}
   method: get
   headers:
     Content-Type: application/json;charset=UTF-8

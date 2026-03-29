@@ -46,12 +46,12 @@ class AssertControl:
 
     # json断言
     def _assert_json_rule(self, field_name: str, rule: dict[str, Any]):
-        jsonPah = rule.get("jsonpath")
+        jsonPath = rule.get("jsonpath")
         op = (rule.get("type") or "eq").lower()
         expected = rule.get("value")
-
+        
         # 提取实际值
-        actual = self._extract_jsonpath(self.response_body, jsonPah)
+        actual = self._extract_jsonpath(self.response_body, jsonPath)
 
         if op == "exists":
             return
@@ -62,7 +62,7 @@ class AssertControl:
             field_name=field_name,
             expected=expected,
             actual=actual,
-            jsonpath_expr=jsonPah,
+            jsonpath_expr=jsonPath,
             op=op,
         )
 

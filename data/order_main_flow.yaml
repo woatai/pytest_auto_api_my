@@ -26,7 +26,6 @@ login:
   extract:
       token: $.data.token
       
-
 # 查看商品列表
 product_list: # case_id
   host: ${{host()}}
@@ -73,6 +72,12 @@ product_detail:
       jsonpath: $.msg
       type: in
       value: success 
+  extract:
+    unique:
+      type: in_stock_unique
+      source: $.data.productValue
+
+
 
 # 默认价格
 default_price:

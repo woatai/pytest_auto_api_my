@@ -20,19 +20,31 @@
 ## 3. 目录结构
 
 ```text
-pytest_auto_api_my
-├─ common                # 配置文件与环境管理
-├─ data                  # YAML 测试数据
-├─ docs                  # 项目文档
-├─ test_case             # pytest 测试用例
-├─ util
-│  ├─ assertion          # 断言工具
-│  ├─ context            # 上下文管理
-│  ├─ extract            # 数据提取
-│  ├─ readFileUtils      # YAML 读取与占位符处理
-│  └─ requestsUtils      # 请求封装
-├─ pytest.ini            # pytest 配置
-└─ run.py                # 本地调试入口
+pytest_auto_api_my/
+├── common/          # 配置层
+│   ├── config.yaml    # 多环境配置
+│   ├── config.py      # 导出 HOST
+│   └── setting.py     # 路径工具
+│
+├── data/             # YAML 用例数据
+│   ├── login.yaml           # 登录用例
+│   └── order_main_flow.yaml # 下单主流程
+│
+├── util/             # 核心工具层
+│   ├── readFileUtils/  # YAML 读取与解析
+│   ├── requestsUtils/  # HTTP 请求封装
+│   ├── assertion/      # 断言控制器
+│   ├── extract/        # 数据提取器
+│   └── context/        # 上下文管理器
+│
+├── test_case/        # 测试用例层
+│   ├── login/test_login.py     # 参数化测试
+│   └── test_order_main_flow.py # 流程测试
+│
+├── pytest.ini        # pytest 配置
+├── run.py            # 调试入口
+└── requirements.txt  # 依赖管理
+
 ```
 
 ## 4. 执行流程

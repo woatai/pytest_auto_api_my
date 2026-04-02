@@ -22,13 +22,22 @@ class ExtractControl:
             data = json.loads(data)  # 把字符串转为字典
 
         for var_name, expr in self.extract_data.items():
-            result = jsonpath(self.response_body, expr)
-            assert (
-                result not in (False, None) and len(result) > 0
-            ), f"变量提取失败: {var_name}, jsonpath={expr}, body={data}"
-            if len(result) == 1:
-                ContextManager.set(var_name, result[0])
+            if isinstance(expr, dict) and expr.get("type") == "conditional_find":
+                
+
+
+                
             else:
-                ContextManager.set(var_name, result)
+                self._jsonpath_extract(var_name,expr,self.response_body)
 
 
+    def _jsonpath_extract(self, var_name, expr, data):
+        """ 原有 JSONPath 提取 """
+        result = jsonpath(self.response_body, expr)
+        assert (
+            result not in (False, None) and len(result) > 0
+        ), f"变量提取失败: {var_name}, jsonpath={expr}, body={data}"
+        if len(result) == 1:
+            ContextManager.set(var_name, result[0])
+        else:
+            ContextManager.set(var_name, result)

@@ -70,6 +70,8 @@ class Test_main_flow:
             method=method, host=host, url=url, headers=headers, params=params
         )
         AssertControl(assert_data=case.get("assert"), response=resp).run()
+        ExtractControl(case.get("extract"), resp["body"]).run()
+        assert ContextManager.get("unique") is not None, "没有提取到 unique"
         
     
 """pytest test_case/test_order_main_flow.py -q -s -k test_product_list"""

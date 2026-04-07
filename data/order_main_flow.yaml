@@ -74,8 +74,16 @@ product_detail:
       value: success 
   extract:
     unique:
-      type: in_stock_unique
+      type: conditional_find
       source: $.data.productValue
+      conditions:
+        - field: stock
+          op: ">"
+          value: 0  
+      pick_field: unique
+      pick: first
+      required: true  # 是否必须要取到值
+      error_message: 没有可用库存，无法下单
 
 
 

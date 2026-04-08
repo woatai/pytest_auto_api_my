@@ -103,7 +103,6 @@ default_price:
       type: in
       value: success
 
-
 # 个人中心
 user_center:
   host: ${{host()}}
@@ -116,30 +115,41 @@ user_center:
   dependence_case: false
   dependence_case_data: []
   assert:
-    status_code:
+    status_code: 200
 
 # 直接购买
 buy_now:
   host: ${{host()}}
   url: /cart/add
-  method: get
+  method: post
   headers:
     Content-Type: application/json;charset=UTF-8
+    Authorization: Bearer ${{token}}
   requestType: none
   is_run: true
+  data: 
+    productId: ${{product_id}}
+    uniqueId: ${{unique}}
+    new: 1
   dependence_case: false
   dependence_case_data: []
   assert:
     status_code: 200
+  extract:
+    cartId: $.data.cartId
 # 检查发货
 check_shipping:
   host: ${{host()}}
-  url: /product/detail/{id}
-  method: get
+  url: /order/check_shipping
+  method: post
   headers:
     Content-Type: application/json;charset=UTF-8
+    Authorization: Bearer ${{token}}
   requestType: none
   is_run: true
+  data: 
+    cartId: ${{cartId}}
+    new: 1
   dependence_case: false
   dependence_case_data: []
   assert:
@@ -147,10 +157,11 @@ check_shipping:
 # 获取默认地址
 get_default_address:
   host: ${{host()}}
-  url: /product/detail/{id}
+  url: /address/default
   method: get
   headers:
     Content-Type: application/json;charset=UTF-8
+    Authorization: Bearer ${{token}}
   requestType: none
   is_run: true
   dependence_case: false
@@ -160,12 +171,18 @@ get_default_address:
 # 订单确认
 order_confirm:
   host: ${{host()}}
-  url: /product/detail/{id}
-  method: get
+  url: /order/confirm
+  method: post
   headers:
     Content-Type: application/json;charset=UTF-8
+    Authorization: Bearer ${{token}}
   requestType: none
   is_run: true
+  data: 
+    addressId: 0
+    cartId: ${{cartId}}
+    new: 1
+    shipping_type: 1
   dependence_case: false
   dependence_case_data: []
   assert:

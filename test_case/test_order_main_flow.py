@@ -72,10 +72,106 @@ class Test_main_flow:
         AssertControl(assert_data=case.get("assert"), response=resp).run()
         ExtractControl(case.get("extract"), resp["body"]).run()
         assert ContextManager.get("unique") is not None, "没有提取到 unique"
-        
+
     @allure.story("默认价格")
     def test_default_price(self):
         raw_case = get_case_by_id(yaml_name, "default_price")
+        case = resolve_placeholders(raw_case)
+
+        # 必填
+        host = case["host"]
+        url = case["url"]
+        method = case["method"]
+        data = case.get("data")
+        # 非必填
+        headers = case.get("headers")
+        params = case.get("params")
+        resp = RequestControl().send_request(
+            method=method, host=host, url=url, headers=headers, json=data
+        )
+        AssertControl(assert_data=case.get("assert"), response=resp).run()
+        ExtractControl(case.get("extract"), resp["body"]).run()
+
+    @allure.story("个人中心")
+    def test_user_center(self):
+        raw_case = get_case_by_id(yaml_name, "user_center")
+        case = resolve_placeholders(raw_case)
+
+        # 必填
+        host = case["host"]
+        url = case["url"]
+        method = case["method"]
+        data = case.get("data")
+        # 非必填
+        headers = case.get("headers")
+        params = case.get("params")
+        resp = RequestControl().send_request(
+            method=method, host=host, url=url, headers=headers, json=data
+        )
+        AssertControl(assert_data=case.get("assert"), response=resp).run()
+        ExtractControl(case.get("extract"), resp["body"]).run()
+
+    @allure.story("直接购买")
+    def test_buy_now(self):
+        raw_case = get_case_by_id(yaml_name, "buy_now")
+        case = resolve_placeholders(raw_case)
+
+        # 必填
+        host = case["host"]
+        url = case["url"]
+        method = case["method"]
+        data = case.get("data")
+        # 非必填
+        headers = case.get("headers")
+        params = case.get("params")
+        resp = RequestControl().send_request(
+            method=method, host=host, url=url, headers=headers, json=data
+        )
+        AssertControl(assert_data=case.get("assert"), response=resp).run()
+        ExtractControl(case.get("extract"), resp["body"]).run()
+
+    
+    @allure.story("检查发货")
+    def test_check_shipping(self):
+        raw_case = get_case_by_id(yaml_name, "check_shipping")
+        case = resolve_placeholders(raw_case)
+
+        # 必填
+        host = case["host"]
+        url = case["url"]
+        method = case["method"]
+        data = case.get("data")
+        # 非必填
+        headers = case.get("headers")
+        params = case.get("params")
+        resp = RequestControl().send_request(
+            method=method, host=host, url=url, headers=headers, json=data
+        )
+        AssertControl(assert_data=case.get("assert"), response=resp).run()
+        ExtractControl(case.get("extract"), resp["body"]).run()
+
+    @allure.story("获取默认地址")
+    def test_get_default_address(self):
+        raw_case = get_case_by_id(yaml_name, "get_default_address")
+        case = resolve_placeholders(raw_case)
+
+        # 必填
+        host = case["host"]
+        url = case["url"]
+        method = case["method"]
+        data = case.get("data")
+        # 非必填
+        headers = case.get("headers")
+        params = case.get("params")
+        resp = RequestControl().send_request(
+            method=method, host=host, url=url, headers=headers, json=data
+        )
+        AssertControl(assert_data=case.get("assert"), response=resp).run()
+        ExtractControl(case.get("extract"), resp["body"]).run() 
+
+    @allure.story("订单确认")
+    def test_order_confirm(self):
+        raw_case = get_case_by_id(yaml_name, "order_confirm")
         case = resolve_placeholders(raw_case)
 
         # 必填

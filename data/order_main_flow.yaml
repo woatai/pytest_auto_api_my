@@ -24,8 +24,8 @@ login:
       type: in
       value: 登录成功
   extract:
-      token: $.data.token
-      
+    token: $.data.token
+
 # 查看商品列表
 product_list: # case_id
   host: ${{host()}}
@@ -47,13 +47,13 @@ product_list: # case_id
     msg:
       jsonpath: $.msg
       type: in
-      value: success 
+      value: success
     product_id:
       jsonpath: $.data.list[0].id
       type: exists
   extract:
     product_id: $.data.list[0].id
-      
+
 # 查看商品详情
 product_detail:
   host: ${{host()}}
@@ -68,10 +68,10 @@ product_detail:
   dependence_case_data: []
   assert:
     status_code: 200
-    msg: 
+    msg:
       jsonpath: $.msg
       type: in
-      value: success 
+      value: success
   extract:
     unique:
       type: conditional_find
@@ -79,18 +79,16 @@ product_detail:
       conditions:
         - field: stock
           op: ">"
-          value: 0  
+          value: 0
       pick_field: unique
       pick: first
-      required: true  # 是否必须要取到值
+      required: true # 是否必须要取到值
       error_message: 没有可用库存，无法下单
-
-
 
 # 默认价格
 default_price:
   host: ${{host()}}
-  url: /product/detail/${{id}}/${{unique}}
+  url: /product/detail/${{product_id}}/${{unique}}
   method: get
   headers:
     Content-Type: application/json;charset=UTF-8
@@ -100,6 +98,11 @@ default_price:
   dependence_case_data: []
   assert:
     status_code: 200
+    msg:
+      jsonpath: $.msg
+      type: in
+      value: success
+
 
 # 个人中心
 user_center:
@@ -114,7 +117,7 @@ user_center:
   dependence_case_data: []
   assert:
     status_code:
-    
+
 # 直接购买
 buy_now:
   host: ${{host()}}

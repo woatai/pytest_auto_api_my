@@ -73,5 +73,24 @@ class Test_main_flow:
         ExtractControl(case.get("extract"), resp["body"]).run()
         assert ContextManager.get("unique") is not None, "没有提取到 unique"
         
-    
+    @allure.story("默认价格")
+    def test_default_price(self):
+        raw_case = get_case_by_id(yaml_name, "default_price")
+        case = resolve_placeholders(raw_case)
+
+        # 必填
+        host = case["host"]
+        url = case["url"]
+        method = case["method"]
+        data = case.get("data")
+        # 非必填
+        headers = case.get("headers")
+        params = case.get("params")
+        resp = RequestControl().send_request(
+            method=method, host=host, url=url, headers=headers, json=data
+        )
+        AssertControl(assert_data=case.get("assert"), response=resp).run()
+        ExtractControl(case.get("extract"), resp["body"]).run()
+
+
 """pytest test_case/test_order_main_flow.py -q -s -k test_product_list"""

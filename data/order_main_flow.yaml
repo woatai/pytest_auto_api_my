@@ -127,7 +127,7 @@ buy_now:
     Authorization: Bearer ${{token}}
   requestType: none
   is_run: true
-  data: 
+  data:
     productId: ${{product_id}}
     uniqueId: ${{unique}}
     new: 1
@@ -147,7 +147,7 @@ check_shipping:
     Authorization: Bearer ${{token}}
   requestType: none
   is_run: true
-  data: 
+  data:
     cartId: ${{cartId}}
     new: 1
   dependence_case: false
@@ -178,7 +178,7 @@ order_confirm:
     Authorization: Bearer ${{token}}
   requestType: none
   is_run: true
-  data: 
+  data:
     addressId: 0
     cartId: ${{cartId}}
     new: 1

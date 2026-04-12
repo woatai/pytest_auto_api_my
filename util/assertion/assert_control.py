@@ -44,8 +44,8 @@ class AssertControl:
             jsonpath_expr=None,
         )
 
-    # json断言
     def _assert_json_rule(self, field_name: str, rule: dict[str, Any]):
+        """ json断言"""
         jsonPath = rule.get("jsonpath")
         op = (rule.get("type") or "eq").lower()
         expected = rule.get("value")
@@ -66,9 +66,9 @@ class AssertControl:
             op=op,
         )
 
-    # 通过jsonpath在body去提取实际变量
     @staticmethod
     def _extract_jsonpath(body: Any, expr: str) -> Any:
+        """通过jsonpath在body去提取实际变量"""
         data = body
         if isinstance(data, str):
             try:

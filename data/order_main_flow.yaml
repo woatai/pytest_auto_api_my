@@ -19,6 +19,10 @@ login:
   dependence_case_data: []
   assert:
     status_code: 200
+    status: 
+      jsonpath: $.status
+      type: ==
+      value: 200 
     msg:
       jsonpath: $.msg
       type: in
@@ -71,7 +75,7 @@ product_detail:
     msg:
       jsonpath: $.msg
       type: in
-      value: success
+      value: success 
   extract:
     unique:
       type: conditional_find
@@ -189,173 +193,3 @@ order_confirm:
     status_code: 200
 
 
-
-assert:
-  status_code: 200
-
-  l1_status:
-    jsonpath: $.status
-    type: eq
-    value: 200
-
-  l1_msg:
-    jsonpath: $.msg
-    type: eq
-    value: "success"
-
-  l2_cart_num:
-    jsonpath: $.data.cartInfo[0].cart_num
-    type: eq
-    value: 1
-
-  l3_unique_match:
-    jsonpath: $.data.cartInfo[0].product_attr_unique
-    type: eq
-    value: ${{unique}}
-
-  l4_order_key_exists:
-    jsonpath: $.data.orderKey
-    type: exists
-
-# 登录接口模板：
-
-assert:
-  status_code: 200
-  l1_status:
-    jsonpath: $.status
-    type: eq
-    value: 200
-  l1_msg:
-    jsonpath: $.msg
-    type: eq
-    value: "登录成功"
-  l4_token:
-    jsonpath: $.data.token
-    type: exists
-
-
-# 商品详情模板：
-assert:
-  status_code: 200
-  l1_status:
-    jsonpath: $.status
-    type: eq
-    value: 200
-  l1_msg:
-    jsonpath: $.msg
-    type: eq
-    value: "success"
-  l2_store_name:
-    jsonpath: $.data.storeInfo.store_name
-    type: contains
-    value: "iPad"
-  l2_price:
-    jsonpath: $.data.storeInfo.price
-    type: eq
-    value: "3999.00"
-  l2_min_qty:
-    jsonpath: $.data.storeInfo.min_qty
-    type: eq
-    value: 1
-  l2_attr_1:
-    jsonpath: $.data.productAttr[0].attr_name
-    type: eq
-    value: "颜色"
-
-# 提取规格模板：
-extract:
-  unique:
-    type: conditional_find
-    source: $.data.productValue
-    conditions:
-      - field: stock
-        op: ">"
-        value: 0
-    pick_field: unique
-    pick: first
-    required: true
-    error_message: 没有可用库存
-
-
-# 订单确认模板：
-assert:
-  status_code: 200
-
-  l1_status:
-    jsonpath: $.status
-    type: eq
-    value: 200
-  l1_msg:
-    jsonpath: $.msg
-    type: eq
-    value: "success"
-
-  l2_valid_count:
-    jsonpath: $.data.valid_count
-    type: eq
-    value: 1
-  l2_cart_num:
-    jsonpath: $.data.cartInfo[0].cart_num
-    type: eq
-    value: 1
-  l2_attr_status:
-    jsonpath: $.data.cartInfo[0].attrStatus
-    type: eq
-    value: true
-  l2_is_valid:
-    jsonpath: $.data.cartInfo[0].is_valid
-    type: eq
-    value: 1
-  l2_sum_price:
-    jsonpath: $.data.priceGroup.sumPrice
-    type: eq
-    value: "3999.00"
-  l2_total_price:
-    jsonpath: $.data.priceGroup.totalPrice
-    type: eq
-    value: "3999.00"
-
-  l3_cart_id_match:
-    jsonpath: $.data.cartInfo[0].id
-    type: eq
-    value: ${{cartId}}
-  l3_unique_match:
-    jsonpath: $.data.cartInfo[0].product_attr_unique
-    type: eq
-    value: ${{unique}}
-
-  l4_order_key:
-    jsonpath: $.data.orderKey
-    type: exists
-  l4_pay_weixin_open:
-    jsonpath: $.data.pay_weixin_open
-    type: eq
-    value: true
-
-# 空场景/异常场景模板：
-assert:
-  status_code: 200
-  l1_status:
-    jsonpath: $.status
-    type: eq
-    value: 200
-  l1_msg:
-    jsonpath: $.msg
-    type: eq
-    value: "empty"
-  l2_data_empty:
-    jsonpath: $.data
-    type: eq
-    value: []
-
-# 未登录场景模板：
-assert:
-  status_code: 200
-  l1_status:
-    jsonpath: $.status
-    type: eq
-    value: 110002
-  l1_msg:
-    jsonpath: $.msg
-    type: eq
-    value: "请登录"

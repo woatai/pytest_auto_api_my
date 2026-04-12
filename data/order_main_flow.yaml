@@ -1,28 +1,17 @@
-case_common:
-  allureEpic: 下单主流程
-  allureFeature: 完整流程
-  allureStory: 用户正常下单
-
-# 登录
 login:
-  host: ${{host()}}
   url: /login
   method: post
   headers:
     Content-Type: application/json;charset=UTF-8
-  requestType: none
-  is_run: true
   data:
     account: 13423232323
     password: "asdf123456"
-  dependence_case: false
-  dependence_case_data: []
   assert:
     status_code: 200
-    status: 
+    status:
       jsonpath: $.status
       type: ==
-      value: 200 
+      value: 200
     msg:
       jsonpath: $.msg
       type: in
@@ -30,22 +19,16 @@ login:
   extract:
     token: $.data.token
 
-# 查看商品列表
-product_list: # case_id
-  host: ${{host()}}
+product_list:
   url: /home/products
   method: get
   headers:
     Content-Type: application/json;charset=UTF-8
     Authorization: Bearer ${{token}}
-  requestType: none
-  is_run: true
   params:
     ids:
     page: 1
     limit: 14
-  dependence_case: false
-  dependence_case_data: []
   assert:
     status_code: 200
     msg:
@@ -58,24 +41,18 @@ product_list: # case_id
   extract:
     product_id: $.data.list[0].id
 
-# 查看商品详情
 product_detail:
-  host: ${{host()}}
   url: /product/detail/${{product_id}}
   method: get
   headers:
     Content-Type: application/json;charset=UTF-8
     Authorization: Bearer ${{token}}
-  requestType: none
-  is_run: true
-  dependence_case: false
-  dependence_case_data: []
   assert:
     status_code: 200
     msg:
       jsonpath: $.msg
       type: in
-      value: success 
+      value: success
   extract:
     unique:
       type: conditional_find
@@ -86,20 +63,14 @@ product_detail:
           value: 0
       pick_field: unique
       pick: first
-      required: true # 是否必须要取到值
+      required: true
       error_message: 没有可用库存，无法下单
 
-# 默认价格
 default_price:
-  host: ${{host()}}
   url: /product/detail/${{product_id}}/${{unique}}
   method: get
   headers:
     Content-Type: application/json;charset=UTF-8
-  requestType: none
-  is_run: true
-  dependence_case: false
-  dependence_case_data: []
   assert:
     status_code: 200
     msg:
@@ -107,89 +78,60 @@ default_price:
       type: in
       value: success
 
-# 个人中心
 user_center:
-  host: ${{host()}}
   url: /user
   method: get
   headers:
     Content-Type: application/json;charset=UTF-8
-  requestType: none
-  is_run: true
-  dependence_case: false
-  dependence_case_data: []
   assert:
     status_code: 200
 
-# 直接购买
 buy_now:
-  host: ${{host()}}
   url: /cart/add
   method: post
   headers:
     Content-Type: application/json;charset=UTF-8
     Authorization: Bearer ${{token}}
-  requestType: none
-  is_run: true
   data:
     productId: ${{product_id}}
     uniqueId: ${{unique}}
     new: 1
-  dependence_case: false
-  dependence_case_data: []
   assert:
     status_code: 200
   extract:
     cartId: $.data.cartId
-# 检查发货
+
 check_shipping:
-  host: ${{host()}}
   url: /order/check_shipping
   method: post
   headers:
     Content-Type: application/json;charset=UTF-8
     Authorization: Bearer ${{token}}
-  requestType: none
-  is_run: true
   data:
     cartId: ${{cartId}}
     new: 1
-  dependence_case: false
-  dependence_case_data: []
   assert:
     status_code: 200
-# 获取默认地址
+
 get_default_address:
-  host: ${{host()}}
   url: /address/default
   method: get
   headers:
     Content-Type: application/json;charset=UTF-8
     Authorization: Bearer ${{token}}
-  requestType: none
-  is_run: true
-  dependence_case: false
-  dependence_case_data: []
   assert:
     status_code: 200
-# 订单确认
+
 order_confirm:
-  host: ${{host()}}
   url: /order/confirm
   method: post
   headers:
     Content-Type: application/json;charset=UTF-8
     Authorization: Bearer ${{token}}
-  requestType: none
-  is_run: true
   data:
     addressId: 0
     cartId: ${{cartId}}
     new: 1
     shipping_type: 1
-  dependence_case: false
-  dependence_case_data: []
   assert:
     status_code: 200
-
-

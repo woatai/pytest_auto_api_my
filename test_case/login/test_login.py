@@ -12,7 +12,7 @@ class TestLogin:
     @allure.story("登录")
     # 把 get_case_list("login.yaml") 返回的每一组 参数名 (case_id, case)  数据依次传给 test_login，
     @pytest.mark.parametrize("case_id, case", get_case_list("login.yaml")) 
-    def test_login(self, case_id, case):
+    def login(self, case_id, case):
         url = case["url"]
         method = case["method"]
         headers = case.get("headers")

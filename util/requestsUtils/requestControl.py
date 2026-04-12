@@ -1,5 +1,7 @@
 import requests
 
+from common.config import HOST
+
 
 class RequestControl:
     def __init__(self) -> None:
@@ -7,12 +9,21 @@ class RequestControl:
         self.session = requests.Session()
 
     def send_request(
-        self, host,method, url, headers=None, params=None, data=None, json=None, timeout=10
+        self,
+        method,
+        url,
+        host=None,
+        headers=None,
+        params=None,
+        data=None,
+        json=None,
+        timeout=10,
     ) -> dict:
         if url.startswith("http"):
             url = url
         else:
-            url = host.rstrip("/") + "/" + url.lstrip("/")
+            base_host = host or HOST
+            url = base_host.rstrip("/") + "/" + url.lstrip("/")
 
         # 先准备请求，异常时也能取到最终 headers
         req = requests.Request(

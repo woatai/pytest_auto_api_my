@@ -41,4 +41,4 @@ def get_case_by_id(yaml_name:str,case_id:str) -> dict:
     for current_case_id,case in cases:
         if current_case_id == case_id:
             return case
-    return ValueError(f"未找到用例: {case_id}")
+    raise ValueError(f"未找到用例: {case_id}")

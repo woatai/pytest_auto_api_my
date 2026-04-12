@@ -19,9 +19,7 @@ class Test_main_flow:
     def test_login(self):
         raw_case = get_case_by_id(yaml_name, "login")
         case = resolve_placeholders(raw_case)
-
         # 必填
-        host = case["host"]
         url = case["url"]
         method = case["method"]
         data = case.get("data")
@@ -29,7 +27,7 @@ class Test_main_flow:
         headers = case.get("headers")
         params = case.get("params")
         resp = RequestControl().send_request(
-            method=method, host=host, url=url, headers=headers, json=data
+            method=method, url=url, headers=headers, json=data
         )
         AssertControl(assert_data=case.get("assert"), response=resp).run()
         ExtractControl(case.get("extract"), resp["body"]).run()
@@ -42,14 +40,13 @@ class Test_main_flow:
         case = resolve_placeholders(raw_case)
 
         # 必填
-        host = case["host"]
         url = case["url"]
         method = case["method"]
         # 非必填
         headers = case.get("headers")
         params = case.get("params")
         resp = RequestControl().send_request(
-            method=method, host=host, url=url, headers=headers, params=params
+            method=method, url=url, headers=headers, params=params
         )
         AssertControl(assert_data=case.get("assert"), response=resp).run()
         ExtractControl(case.get("extract"), resp["body"]).run()
@@ -60,14 +57,13 @@ class Test_main_flow:
         raw_case = get_case_by_id(yaml_name, "product_detail")
         case = resolve_placeholders(raw_case)
 
-        host = case["host"]
         url = case["url"]
         method = case["method"]
         # 非必填
         headers = case.get("headers")
         params = case.get("params")
         resp = RequestControl().send_request(
-            method=method, host=host, url=url, headers=headers, params=params
+            method=method, url=url, headers=headers, params=params
         )
         AssertControl(assert_data=case.get("assert"), response=resp).run()
         ExtractControl(case.get("extract"), resp["body"]).run()
@@ -79,7 +75,6 @@ class Test_main_flow:
         case = resolve_placeholders(raw_case)
 
         # 必填
-        host = case["host"]
         url = case["url"]
         method = case["method"]
         data = case.get("data")
@@ -87,7 +82,7 @@ class Test_main_flow:
         headers = case.get("headers")
         params = case.get("params")
         resp = RequestControl().send_request(
-            method=method, host=host, url=url, headers=headers, json=data
+            method=method, url=url, headers=headers, json=data
         )
         AssertControl(assert_data=case.get("assert"), response=resp).run()
         ExtractControl(case.get("extract"), resp["body"]).run()
@@ -98,7 +93,6 @@ class Test_main_flow:
         case = resolve_placeholders(raw_case)
 
         # 必填
-        host = case["host"]
         url = case["url"]
         method = case["method"]
         data = case.get("data")
@@ -106,7 +100,7 @@ class Test_main_flow:
         headers = case.get("headers")
         params = case.get("params")
         resp = RequestControl().send_request(
-            method=method, host=host, url=url, headers=headers, json=data
+            method=method, url=url, headers=headers, json=data
         )
         AssertControl(assert_data=case.get("assert"), response=resp).run()
         ExtractControl(case.get("extract"), resp["body"]).run()
@@ -117,7 +111,6 @@ class Test_main_flow:
         case = resolve_placeholders(raw_case)
 
         # 必填
-        host = case["host"]
         url = case["url"]
         method = case["method"]
         data = case.get("data")
@@ -125,7 +118,7 @@ class Test_main_flow:
         headers = case.get("headers")
         params = case.get("params")
         resp = RequestControl().send_request(
-            method=method, host=host, url=url, headers=headers, json=data
+            method=method, url=url, headers=headers, json=data
         )
         AssertControl(assert_data=case.get("assert"), response=resp).run()
         ExtractControl(case.get("extract"), resp["body"]).run()
@@ -137,7 +130,6 @@ class Test_main_flow:
         case = resolve_placeholders(raw_case)
 
         # 必填
-        host = case["host"]
         url = case["url"]
         method = case["method"]
         data = case.get("data")
@@ -145,7 +137,7 @@ class Test_main_flow:
         headers = case.get("headers")
         params = case.get("params")
         resp = RequestControl().send_request(
-            method=method, host=host, url=url, headers=headers, json=data
+            method=method, url=url, headers=headers, json=data
         )
         AssertControl(assert_data=case.get("assert"), response=resp).run()
         ExtractControl(case.get("extract"), resp["body"]).run()
@@ -156,7 +148,6 @@ class Test_main_flow:
         case = resolve_placeholders(raw_case)
 
         # 必填
-        host = case["host"]
         url = case["url"]
         method = case["method"]
         data = case.get("data")
@@ -164,7 +155,7 @@ class Test_main_flow:
         headers = case.get("headers")
         params = case.get("params")
         resp = RequestControl().send_request(
-            method=method, host=host, url=url, headers=headers, json=data
+            method=method, url=url, headers=headers, json=data
         )
         AssertControl(assert_data=case.get("assert"), response=resp).run()
         ExtractControl(case.get("extract"), resp["body"]).run() 
@@ -175,7 +166,6 @@ class Test_main_flow:
         case = resolve_placeholders(raw_case)
 
         # 必填
-        host = case["host"]
         url = case["url"]
         method = case["method"]
         data = case.get("data")
@@ -183,10 +173,9 @@ class Test_main_flow:
         headers = case.get("headers")
         params = case.get("params")
         resp = RequestControl().send_request(
-            method=method, host=host, url=url, headers=headers, json=data
+            method=method, url=url, headers=headers, json=data
         )
         AssertControl(assert_data=case.get("assert"), response=resp).run()
         ExtractControl(case.get("extract"), resp["body"]).run()
 
 
-"""pytest test_case/test_order_main_flow.py -q -s -k test_product_list"""

@@ -1,0 +1,65 @@
+{
+  "uid" : "d548a82c255f519",
+  "name" : "test_product_list",
+  "fullName" : "test_case.test_order_main_flow.Test_main_flow#test_product_list",
+  "historyId" : "a165942331a86fc067a3ef73bfa258a6",
+  "time" : {
+    "start" : 1775963550540,
+    "stop" : 1775963550854,
+    "duration" : 314
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ ],
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "epic",
+    "value" : "下单主流程"
+  }, {
+    "name" : "story",
+    "value" : "商品列表"
+  }, {
+    "name" : "feature",
+    "value" : "完整流程"
+  }, {
+    "name" : "parentSuite",
+    "value" : "test_case"
+  }, {
+    "name" : "suite",
+    "value" : "test_order_main_flow"
+  }, {
+    "name" : "subSuite",
+    "value" : "Test_main_flow"
+  }, {
+    "name" : "host",
+    "value" : "LAPTOP-IOT4MMRH"
+  }, {
+    "name" : "thread",
+    "value" : "63084-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "test_case.test_order_main_flow"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "tags" : [ ]
+  },
+  "source" : "d548a82c255f519.json",
+  "parameterValues" : [ ]
+}

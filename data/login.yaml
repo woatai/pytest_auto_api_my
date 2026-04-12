@@ -1,27 +1,14 @@
-# 登录接口用例（下单主流程 - 登录）
-case_common:
-  allureEpic: 下单主流程
-  allureFeature: 登录模块
-  allureStory: 用户登录
-
-# 登录成功
-login: 
-  host: ${{host()}}
+login:
   url: /login
   method: post
   headers:
     Content-Type: application/json;charset=UTF-8
-  requestType: none
-  is_run: true
   data:
     account: 13423232323
     password: "asdf123456"
-  dependence_case: false
-  dependence_case_data: []
   assert:
     status_code: 200
     msg:
       jsonpath: $.msg
       type: in
       value: 登录成功
-      AssertType:       

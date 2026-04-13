@@ -1,12 +1,12 @@
 {
-  "uid" : "967c62e9a4c3e949",
-  "name" : "test_placeholder_missing_context_raises",
-  "fullName" : "test_case.test_framework_basics#test_placeholder_missing_context_raises",
-  "historyId" : "83437ce9b51f1cfc609015517f9815a0",
+  "uid" : "8eb829cf21c53801",
+  "name" : "test_placeholder_resolves_context_value",
+  "fullName" : "test_case.test_framework_basics#test_placeholder_resolves_context_value",
+  "historyId" : "81c06f2facb85d00d9efb552ed690d19",
   "time" : {
-    "start" : 1775963550238,
-    "stop" : 1775963550238,
-    "duration" : 0
+    "start" : 1776088597840,
+    "stop" : 1776088597841,
+    "duration" : 1
   },
   "status" : "passed",
   "flaky" : false,
@@ -24,7 +24,7 @@
     "value" : "LAPTOP-IOT4MMRH"
   }, {
     "name" : "thread",
-    "value" : "63084-MainThread"
+    "value" : "35088-MainThread"
   }, {
     "name" : "framework",
     "value" : "pytest"
@@ -48,6 +48,6 @@
     "categories" : [ ],
     "tags" : [ ]
   },
-  "source" : "967c62e9a4c3e949.json",
+  "source" : "8eb829cf21c53801.json",
   "parameterValues" : [ ]
 }

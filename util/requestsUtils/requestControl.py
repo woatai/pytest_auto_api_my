@@ -1,6 +1,7 @@
 import requests
 
 from common.config import HOST
+from util.context.context_manager import ContextManager
 
 
 class RequestControl:
@@ -14,6 +15,7 @@ class RequestControl:
         url,
         host=None,
         headers=None,
+        auth=True,
         params=None,
         data=None,
         json=None,
@@ -25,11 +27,19 @@ class RequestControl:
             base_host = host or HOST
             url = base_host.rstrip("/") + "/" + url.lstrip("/")
 
+        default_headers = {"Content-Type": "application/json;charset=UTF-8"}
+        final_headers = {**default_headers, **(headers or {})} 
+
+        if auth:
+            token = ContextManager.get("token")
+            if token is not None:
+                final_headers["Authorization"] = f"Bearer {token}"
+
         # 先准备请求，异常时也能取到最终 headers
         req = requests.Request(
             method=method.upper(),
             url=url,
-            headers=headers,
+            headers=final_headers,
             params=params,
             data=data,
             json=json,

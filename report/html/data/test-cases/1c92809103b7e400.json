@@ -1,12 +1,12 @@
 {
-  "uid" : "974d4e2f1f7959d2",
-  "name" : "test_buy_now",
-  "fullName" : "test_case.test_order_main_flow.Test_main_flow#test_buy_now",
-  "historyId" : "b036709018f33292aa54f280b76d96e0",
+  "uid" : "1c92809103b7e400",
+  "name" : "test_product_list",
+  "fullName" : "test_case.test_order_main_flow.Test_main_flow#test_product_list",
+  "historyId" : "a165942331a86fc067a3ef73bfa258a6",
   "time" : {
-    "start" : 1775963551843,
-    "stop" : 1775963552135,
-    "duration" : 292
+    "start" : 1776088598177,
+    "stop" : 1776088598495,
+    "duration" : 318
   },
   "status" : "passed",
   "flaky" : false,
@@ -14,14 +14,14 @@
   "beforeStages" : [ ],
   "afterStages" : [ ],
   "labels" : [ {
+    "name" : "feature",
+    "value" : "完整流程"
+  }, {
     "name" : "story",
-    "value" : "直接购买"
+    "value" : "商品列表"
   }, {
     "name" : "epic",
     "value" : "下单主流程"
-  }, {
-    "name" : "feature",
-    "value" : "完整流程"
   }, {
     "name" : "parentSuite",
     "value" : "test_case"
@@ -36,7 +36,7 @@
     "value" : "LAPTOP-IOT4MMRH"
   }, {
     "name" : "thread",
-    "value" : "63084-MainThread"
+    "value" : "35088-MainThread"
   }, {
     "name" : "framework",
     "value" : "pytest"
@@ -60,6 +60,6 @@
     "categories" : [ ],
     "tags" : [ ]
   },
-  "source" : "974d4e2f1f7959d2.json",
+  "source" : "1c92809103b7e400.json",
   "parameterValues" : [ ]
 }

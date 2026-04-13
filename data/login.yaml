@@ -1,8 +1,6 @@
 login:
   url: /login
   method: post
-  headers:
-    Content-Type: application/json;charset=UTF-8
   data:
     account: 13423232323
     password: "asdf123456"

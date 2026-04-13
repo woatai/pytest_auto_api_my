@@ -1,12 +1,12 @@
 {
-  "uid" : "bdcad6266446c08b",
-  "name" : "test_assert_control_runs_with_local_response",
-  "fullName" : "test_case.test_framework_basics#test_assert_control_runs_with_local_response",
-  "historyId" : "5cb57bd837130c3c56ed85c3c174fe74",
+  "uid" : "d38cb1f8b0215e24",
+  "name" : "test_check_shipping",
+  "fullName" : "test_case.test_order_main_flow.Test_main_flow#test_check_shipping",
+  "historyId" : "bbbb5332bdc6454de13d6a273fe49d49",
   "time" : {
-    "start" : 1775963550242,
-    "stop" : 1775963550243,
-    "duration" : 1
+    "start" : 1776088600005,
+    "stop" : 1776088600285,
+    "duration" : 280
   },
   "status" : "passed",
   "flaky" : false,
@@ -14,17 +14,29 @@
   "beforeStages" : [ ],
   "afterStages" : [ ],
   "labels" : [ {
+    "name" : "story",
+    "value" : "检查发货"
+  }, {
+    "name" : "feature",
+    "value" : "完整流程"
+  }, {
+    "name" : "epic",
+    "value" : "下单主流程"
+  }, {
     "name" : "parentSuite",
     "value" : "test_case"
   }, {
     "name" : "suite",
-    "value" : "test_framework_basics"
+    "value" : "test_order_main_flow"
+  }, {
+    "name" : "subSuite",
+    "value" : "Test_main_flow"
   }, {
     "name" : "host",
     "value" : "LAPTOP-IOT4MMRH"
   }, {
     "name" : "thread",
-    "value" : "63084-MainThread"
+    "value" : "35088-MainThread"
   }, {
     "name" : "framework",
     "value" : "pytest"
@@ -33,7 +45,7 @@
     "value" : "cpython3"
   }, {
     "name" : "package",
-    "value" : "test_case.test_framework_basics"
+    "value" : "test_case.test_order_main_flow"
   }, {
     "name" : "resultFormat",
     "value" : "allure2"
@@ -48,6 +60,6 @@
     "categories" : [ ],
     "tags" : [ ]
   },
-  "source" : "bdcad6266446c08b.json",
+  "source" : "d38cb1f8b0215e24.json",
   "parameterValues" : [ ]
 }

@@ -1,12 +1,12 @@
 {
-  "uid" : "aef00530c6ec1d46",
-  "name" : "test_get_default_address",
-  "fullName" : "test_case.test_order_main_flow.Test_main_flow#test_get_default_address",
-  "historyId" : "9a7901ff6f92ea9b8ce0d7e41dc30fc3",
+  "uid" : "32672c66bc595a2b",
+  "name" : "test_order_confirm",
+  "fullName" : "test_case.test_order_main_flow.Test_main_flow#test_order_confirm",
+  "historyId" : "adc7ca42a9369a14aff9c177435e7fa4",
   "time" : {
-    "start" : 1775963552412,
-    "stop" : 1775963552670,
-    "duration" : 258
+    "start" : 1776088600555,
+    "stop" : 1776088600887,
+    "duration" : 332
   },
   "status" : "passed",
   "flaky" : false,
@@ -14,14 +14,14 @@
   "beforeStages" : [ ],
   "afterStages" : [ ],
   "labels" : [ {
+    "name" : "feature",
+    "value" : "完整流程"
+  }, {
     "name" : "story",
-    "value" : "获取默认地址"
+    "value" : "订单确认"
   }, {
     "name" : "epic",
     "value" : "下单主流程"
-  }, {
-    "name" : "feature",
-    "value" : "完整流程"
   }, {
     "name" : "parentSuite",
     "value" : "test_case"
@@ -36,7 +36,7 @@
     "value" : "LAPTOP-IOT4MMRH"
   }, {
     "name" : "thread",
-    "value" : "63084-MainThread"
+    "value" : "35088-MainThread"
   }, {
     "name" : "framework",
     "value" : "pytest"
@@ -60,6 +60,6 @@
     "categories" : [ ],
     "tags" : [ ]
   },
-  "source" : "aef00530c6ec1d46.json",
+  "source" : "32672c66bc595a2b.json",
   "parameterValues" : [ ]
 }

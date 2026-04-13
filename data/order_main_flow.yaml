@@ -1,8 +1,6 @@
 login:
   url: /login
   method: post
-  headers:
-    Content-Type: application/json;charset=UTF-8
   data:
     account: 13423232323
     password: "asdf123456"
@@ -22,9 +20,6 @@ login:
 product_list:
   url: /home/products
   method: get
-  headers:
-    Content-Type: application/json;charset=UTF-8
-    Authorization: Bearer ${{token}}
   params:
     ids:
     page: 1
@@ -44,9 +39,6 @@ product_list:
 product_detail:
   url: /product/detail/${{product_id}}
   method: get
-  headers:
-    Content-Type: application/json;charset=UTF-8
-    Authorization: Bearer ${{token}}
   assert:
     status_code: 200
     msg:
@@ -69,8 +61,6 @@ product_detail:
 default_price:
   url: /product/detail/${{product_id}}/${{unique}}
   method: get
-  headers:
-    Content-Type: application/json;charset=UTF-8
   assert:
     status_code: 200
     msg:
@@ -81,17 +71,12 @@ default_price:
 user_center:
   url: /user
   method: get
-  headers:
-    Content-Type: application/json;charset=UTF-8
   assert:
     status_code: 200
 
 buy_now:
   url: /cart/add
   method: post
-  headers:
-    Content-Type: application/json;charset=UTF-8
-    Authorization: Bearer ${{token}}
   data:
     productId: ${{product_id}}
     uniqueId: ${{unique}}
@@ -104,9 +89,6 @@ buy_now:
 check_shipping:
   url: /order/check_shipping
   method: post
-  headers:
-    Content-Type: application/json;charset=UTF-8
-    Authorization: Bearer ${{token}}
   data:
     cartId: ${{cartId}}
     new: 1
@@ -116,18 +98,12 @@ check_shipping:
 get_default_address:
   url: /address/default
   method: get
-  headers:
-    Content-Type: application/json;charset=UTF-8
-    Authorization: Bearer ${{token}}
   assert:
     status_code: 200
 
 order_confirm:
   url: /order/confirm
   method: post
-  headers:
-    Content-Type: application/json;charset=UTF-8
-    Authorization: Bearer ${{token}}
   data:
     addressId: 0
     cartId: ${{cartId}}

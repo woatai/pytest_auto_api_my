@@ -1,60 +1,72 @@
 {
-  "uid" : "4bfcc7c8cdb9433b",
-  "name" : "test_request_control_uses_default_host",
-  "fullName" : "test_case.test_framework_basics#test_request_control_uses_default_host",
-  "historyId" : "ab2815c4066ef74df3f1507707505f8a",
+  "uid" : "2a62b67c6cd5a995",
+  "name" : "test_user_center",
+  "fullName" : "test_case.test_order_main_flow.TestMainFlow#test_user_center",
+  "historyId" : "45cccf127d9f1ff278bf6285a5969a3d",
   "time" : {
-    "start" : 1776088597831,
-    "stop" : 1776088597835,
-    "duration" : 4
+    "start" : 1776351829641,
+    "stop" : 1776351830279,
+    "duration" : 638
   },
   "status" : "passed",
   "flaky" : false,
   "newFailed" : false,
   "beforeStages" : [ {
-    "name" : "monkeypatch",
+    "name" : "flow_context",
     "time" : {
-      "start" : 1776088597830,
-      "stop" : 1776088597830,
+      "start" : 1776351827854,
+      "stop" : 1776351827854,
       "duration" : 0
     },
     "status" : "passed",
     "steps" : [ ],
     "attachments" : [ ],
     "parameters" : [ ],
-    "hasContent" : false,
     "stepsCount" : 0,
+    "hasContent" : false,
     "attachmentsCount" : 0,
     "shouldDisplayMessage" : false
   } ],
   "afterStages" : [ {
-    "name" : "monkeypatch::0",
+    "name" : "flow_context::0",
     "time" : {
-      "start" : 1776088597836,
-      "stop" : 1776088597836,
+      "start" : 1776351831400,
+      "stop" : 1776351831400,
       "duration" : 0
     },
     "status" : "passed",
     "steps" : [ ],
     "attachments" : [ ],
     "parameters" : [ ],
-    "hasContent" : false,
     "stepsCount" : 0,
+    "hasContent" : false,
     "attachmentsCount" : 0,
     "shouldDisplayMessage" : false
   } ],
   "labels" : [ {
+    "name" : "epic",
+    "value" : "下单主流程"
+  }, {
+    "name" : "feature",
+    "value" : "完整流程"
+  }, {
+    "name" : "story",
+    "value" : "个人中心"
+  }, {
     "name" : "parentSuite",
     "value" : "test_case"
   }, {
     "name" : "suite",
-    "value" : "test_framework_basics"
+    "value" : "test_order_main_flow"
+  }, {
+    "name" : "subSuite",
+    "value" : "TestMainFlow"
   }, {
     "name" : "host",
     "value" : "LAPTOP-IOT4MMRH"
   }, {
     "name" : "thread",
-    "value" : "35088-MainThread"
+    "value" : "33508-MainThread"
   }, {
     "name" : "framework",
     "value" : "pytest"
@@ -63,7 +75,7 @@
     "value" : "cpython3"
   }, {
     "name" : "package",
-    "value" : "test_case.test_framework_basics"
+    "value" : "test_case.test_order_main_flow"
   }, {
     "name" : "resultFormat",
     "value" : "allure2"
@@ -78,6 +90,6 @@
     "categories" : [ ],
     "tags" : [ ]
   },
-  "source" : "4bfcc7c8cdb9433b.json",
+  "source" : "2a62b67c6cd5a995.json",
   "parameterValues" : [ ]
 }

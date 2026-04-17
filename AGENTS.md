@@ -23,6 +23,11 @@
 - Name tests `test_*.py`, and test functions `test_*` so pytest can discover them.
 - Keep YAML data keys stable (`url`, `method`, `headers`, `data`, `assert`) to match parser logic.
 
+## Collaboration Workflow
+- When the user explicitly asks to review or explain a refactor idea first, do not modify business code immediately.
+- In that situation, first provide a concrete code-shaped proposal with a small amount of explanation, wait for confirmation, and only then edit the project code.
+- Instruction or documentation updates requested by the user (for example `AGENTS.md`) may still be applied first if they do not change runtime behavior.
+
 ## Testing Guidelines
 - Framework: `pytest` with `@pytest.mark.parametrize` for YAML-driven cases; `allure-pytest` for reporting metadata.
 - Add at least one positive assertion per case (`status_code` minimum), then extend with body/content checks when needed.

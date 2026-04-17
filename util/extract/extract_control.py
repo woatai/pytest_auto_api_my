@@ -54,6 +54,7 @@ class ExtractControl:
         else:
             ContextManager.set(var_name, result)
 
+    # 此处可以适当减少函数的封装
     def _conditional_find_extract(self, var_name, rule, data):
         source = rule.get("source")
         conditions = rule.get("conditions", [])

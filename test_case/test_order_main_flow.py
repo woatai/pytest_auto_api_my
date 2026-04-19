@@ -27,7 +27,7 @@ class TestMainFlow:
         run_case(YAML_NAME, "default_price")
 
     @allure.story("个人中心")
-    def test_user_center(self):
+    def test_user_center(self,login_init):
         run_case(YAML_NAME, "user_center")
 
     @allure.story("直接购买")

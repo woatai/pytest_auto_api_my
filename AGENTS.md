@@ -1,11 +1,13 @@
-﻿# Repository Guidelines
+# Repository Guidelines
 
 ## Project Overview
+
 - This repository is a lightweight API automation framework built around `pytest + requests + yaml + allure`.
 - The main business scenario is the order main flow in `data/order_main_flow.yaml`, executed step by step with shared context.
 - The core runtime chain is: YAML case -> placeholder resolution -> HTTP request -> assertion -> extraction -> context storage.
 
 ## Project Structure & Ownership
+
 - `test_case/test_order_main_flow.py`: ordered main-flow tests that reuse shared context through the `flow_context` fixture.
 - `test_case/test_framework_basics.py`: local framework-level checks for request sending, placeholder resolution, assertions, and extraction.
 - `test_case/login/test_login.py`: login YAML example test module. It currently keeps a manual request/assert style and its method is not named `test_*`, so pytest does not collect it in the current state.
@@ -23,6 +25,7 @@
 - `_external_pytest_auto_api2/`: external reference material. Do not modify it unless the user explicitly asks.
 
 ## Build, Test, and Development Commands
+
 - `python -m venv .venv` then `.\.venv\Scripts\Activate.ps1`: create and activate a local virtual environment.
 - `pip install -r requirements.txt`: install project dependencies.
 - `pytest`: run all collected tests. `pytest.ini` already sets `testpaths = test_case` and writes allure results to `report/tmp`.
@@ -35,6 +38,7 @@
 - `run.py` depends on a locally available `allure` CLI for HTML report generation.
 
 ## YAML Case Conventions
+
 - Put executable API case data in `data/*.yaml`.
 - Keep executable case keys aligned with the current runtime contract: `url`, `method`, `headers`, `params`, `data`, `assert`, and `extract`.
 - Put shared fields in `case_common` so the YAML parser can merge them into each case.
@@ -44,6 +48,7 @@
 - Add `extract` rules for any values needed by later steps. The current main flow relies on values like `token`, `product_id`, `unique`, and `cartId`.
 
 ## Assertion & Extraction Rules
+
 - Give every API case at least one positive assertion. `status_code` is the minimum requirement.
 - Write JSON body assertions with the current structure: `jsonpath`, `type`, and `value`.
 - Only use assertion operators supported by `AssertControl`: `eq`, `==`, `equals`, `ne`, `!=`, `in`, `contains`, and `exists`.
@@ -51,6 +56,7 @@
 - If you extend assertion or extraction syntax, update the corresponding utility code and add coverage in `test_case/test_framework_basics.py`.
 
 ## Coding Style & Naming Conventions
+
 - Follow PEP 8 with 4-space indentation and readable line lengths.
 - Use `snake_case` for functions, variables, and modules.
 - Use `PascalCase` for classes such as `RequestControl`, `AssertControl`, `ExtractControl`, and `ContextManager`.
@@ -60,6 +66,7 @@
 - Do not hard-code hosts or tokens in test code.
 
 ## Collaboration Workflow
+
 - If the user explicitly asks to review or explain a refactor idea first, do not modify business code immediately.
 - In that situation, first provide a concrete code-shaped proposal with a small amount of explanation, wait for confirmation, and only then edit runtime code.
 - You may apply documentation or instruction updates requested by the user, including `AGENTS.md`, before runtime code changes because they do not change runtime behavior.
@@ -67,6 +74,7 @@
 - Treat generated files under `report/`, `.pytest_cache/`, and `__pycache__/` as artifacts, not as the source of truth.
 
 ## Testing Guidelines
+
 - Cover framework-level behavior in `test_case/test_framework_basics.py` whenever possible.
 - Cover flow-level behavior in YAML and exercise it through `test_case/test_order_main_flow.py`.
 - Preserve context isolation by reusing existing fixtures such as `flow_context` and `case_context` when adding new tests.
@@ -74,12 +82,86 @@
 - Before relying on a test module, confirm that pytest collects it. A file under `test_case/` is not enough if its function or method names do not start with `test_`. In the current repo state, `test_case/login/test_login.py` and `test_case/test_request.py` are examples of files that exist under `test_case/` but are not collected.
 
 ## Commit & Pull Request Guidelines
+
 - Existing history favors short Chinese summaries. Keep commits concise, imperative, and scoped.
 - One logical change per commit. Do not mix framework refactors, YAML changes, and unrelated documentation changes unless the user asks for that grouping.
 - PRs should include change purpose, affected paths, exact verification commands, and representative output when behavior changes.
 
 ## Security & Configuration Tips
+
 - Do not commit secrets, tokens, or private credentials into `common/config.yaml`, YAML test data, or report artifacts.
 - Keep environment-specific hosts configurable through `common/config.yaml` and fixture-driven switching, not hard-coded in business tests.
 - Be cautious with real external hosts in flow tests. Prefer configuration changes over code edits when switching environments.
 
+"" 
+
+# AGENTS.md
+
+Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.
+
+**Tradeoff:** These guidelines bias toward caution over speed. For trivial tasks, use judgment.
+
+## 1. Think Before Coding
+
+**Don't assume. Don't hide confusion. Surface tradeoffs.**
+
+Before implementing:
+
+- State your assumptions explicitly. If uncertain, ask.
+- If multiple interpretations exist, present them - don't pick silently.
+- If a simpler approach exists, say so. Push back when warranted.
+- If something is unclear, stop. Name what's confusing. Ask.
+
+## 2. Simplicity First
+
+**Minimum code that solves the problem. Nothing speculative.**
+
+- No features beyond what was asked.
+- No abstractions for single-use code.
+- No "flexibility" or "configurability" that wasn't requested.
+- No error handling for impossible scenarios.
+- If you write 200 lines and it could be 50, rewrite it.
+
+Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
+
+## 3. Surgical Changes
+
+**Touch only what you must. Clean up only your own mess.**
+
+When editing existing code:
+
+- Don't "improve" adjacent code, comments, or formatting.
+- Don't refactor things that aren't broken.
+- Match existing style, even if you'd do it differently.
+- If you notice unrelated dead code, mention it - don't delete it.
+
+When your changes create orphans:
+
+- Remove imports/variables/functions that YOUR changes made unused.
+- Don't remove pre-existing dead code unless asked.
+
+The test: Every changed line should trace directly to the user's request.
+
+## 4. Goal-Driven Execution
+
+**Define success criteria. Loop until verified.**
+
+Transform tasks into verifiable goals:
+
+- "Add validation" → "Write tests for invalid inputs, then make them pass"
+- "Fix the bug" → "Write a test that reproduces it, then make it pass"
+- "Refactor X" → "Ensure tests pass before and after"
+
+For multi-step tasks, state a brief plan:
+
+```
+1. [Step] → verify: [check]
+2. [Step] → verify: [check]
+3. [Step] → verify: [check]
+```
+
+Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
+
+---
+
+**These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.

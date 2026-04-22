@@ -1,6 +1,9 @@
-login:
+case_common:
   url: /login
   method: post
+
+login_success:
+  name: 登录成功
   data:
     account: 13423232323
     password: "asdf123456"
@@ -10,3 +13,28 @@ login:
       jsonpath: $.msg
       type: in
       value: 登录成功
+  extract:
+    token: $.data.token
+
+login_wrong_password:
+  name: 密码错误
+  data:
+    account: 13423232323
+    password: "wrong_password"
+  assert:
+    status_code: 200
+    msg:
+      jsonpath: $.msg
+      type: in
+      value: 密码错误
+
+login_empty_account:
+  name: 手机号为空
+  data:
+    account: ""
+    password: "asdf123456"
+  assert:
+    status_code: 200
+    msg:
+      jsonpath: $.msg
+      type: exists

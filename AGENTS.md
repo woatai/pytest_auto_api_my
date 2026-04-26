@@ -93,8 +93,6 @@
 - Keep environment-specific hosts configurable through `common/config.yaml` and fixture-driven switching, not hard-coded in business tests.
 - Be cautious with real external hosts in flow tests. Prefer configuration changes over code edits when switching environments.
 
-"" 
-
 # AGENTS.md
 
 Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.

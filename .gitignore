@@ -19,3 +19,6 @@ report/
 .vscode/
 .DS_Store
 Thumbs.db
+
+# Local Codex project skills
+.codex/

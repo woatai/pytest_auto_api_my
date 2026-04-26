@@ -61,7 +61,7 @@ def login_init(flow_context):
     预留：如果某些流程一开始就需要已登录状态，
     可以把登录放进 fixture，而不是每个类都手写一遍。
     """
-    resp = run_case("order_main_flow.yaml","login")
+    resp = run_case("login/login.yaml", "login_success")
 
     return resp
 

@@ -1,0 +1,21 @@
+check_shipping:
+  name: 检查发货
+  url: /order/check_shipping
+  method: post
+  data:
+    cartId: ${{cartId}}
+    new: 1
+  assert:
+    status_code: 200
+
+order_confirm:
+  name: 订单确认
+  url: /order/confirm
+  method: post
+  data:
+    addressId: 0
+    cartId: ${{cartId}}
+    new: 1
+    shipping_type: 1
+  assert:
+    status_code: 200

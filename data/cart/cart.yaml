@@ -1,0 +1,12 @@
+buy_now:
+  name: 直接购买
+  url: /cart/add
+  method: post
+  data:
+    productId: ${{product_id}}
+    uniqueId: ${{unique}}
+    new: 1
+  assert:
+    status_code: 200
+  extract:
+    cartId: $.data.cartId

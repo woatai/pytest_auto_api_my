@@ -1,0 +1,6 @@
+get_default_address:
+  name: 获取默认地址
+  url: /address/default
+  method: get
+  assert:
+    status_code: 200

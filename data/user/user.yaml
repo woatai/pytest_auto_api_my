@@ -1,0 +1,6 @@
+user_center:
+  name: 个人中心
+  url: /user
+  method: get
+  assert:
+    status_code: 200

@@ -9,6 +9,10 @@ login_success:
     password: "asdf123456"
   assert:
     status_code: 200
+    status:
+      jsonpath: $.status
+      type: ==
+      value: 200
     msg:
       jsonpath: $.msg
       type: in
@@ -23,6 +27,10 @@ login_wrong_password:
     password: "wrong_password"
   assert:
     status_code: 200
+    status:
+      jsonpath: $.status
+      type: "!="
+      value: 200
     msg:
       jsonpath: $.msg
       type: in
@@ -35,6 +43,11 @@ login_empty_account:
     password: "asdf123456"
   assert:
     status_code: 200
+    status:
+      jsonpath: $.status
+      type: "!="
+      value: 200
     msg:
       jsonpath: $.msg
-      type: exists
+      type: in
+      value: 手机号

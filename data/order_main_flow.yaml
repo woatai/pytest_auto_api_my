@@ -1,113 +1,17 @@
-login:
-  url: /login
-  method: post
-  data:
-    account: 13423232323
-    password: "asdf123456"
-  assert:
-    status_code: 200
-    status:
-      jsonpath: $.status
-      type: ==
-      value: 200
-    msg:
-      jsonpath: $.msg
-      type: in
-      value: 登录成功
-  extract:
-    token: $.data.token
+flow:
+  name: 下单主流程
+  fail_fast: true
+  tags:
+    - order
+    - smoke
 
-product_list:
-  url: /home/products
-  method: get
-  params:
-    ids:
-    page: 1
-    limit: 14
-  assert:
-    status_code: 200
-    msg:
-      jsonpath: $.msg
-      type: in
-      value: success
-    product_id:
-      jsonpath: $.data.list[0].id
-      type: exists
-  extract:
-    product_id: $.data.list[0].id
-
-product_detail:
-  url: /product/detail/${{product_id}}
-  method: get
-  assert:
-    status_code: 200
-    msg:
-      jsonpath: $.msg
-      type: in
-      value: success
-  extract:
-    unique:
-      type: conditional_find
-      source: $.data.productValue
-      conditions:
-        - field: stock
-          op: ">"
-          value: 0
-      pick_field: unique
-      pick: first
-      required: true
-      error_message: 没有可用库存，无法下单
-
-default_price:
-  url: /product/detail/${{product_id}}/${{unique}}
-  method: get
-  assert:
-    status_code: 200
-    msg:
-      jsonpath: $.msg
-      type: in
-      value: success
-
-user_center:
-  url: /user
-  method: get
-  assert:
-    status_code: 200
-
-buy_now:
-  url: /cart/add
-  method: post
-  data:
-    productId: ${{product_id}}
-    uniqueId: ${{unique}}
-    new: 1
-  assert:
-    status_code: 200
-  extract:
-    cartId: $.data.cartId
-
-check_shipping:
-  url: /order/check_shipping
-  method: post
-  data:
-    cartId: ${{cartId}}
-    new: 1
-  assert:
-    status_code: 200
-
-get_default_address:
-  url: /address/default
-  method: get
-  assert:
-    status_code: 200
-
-order_confirm:
-  url: /order/confirm
-  method: post
-  data:
-    addressId: 0
-    cartId: ${{cartId}}
-    new: 1
-    shipping_type: 1
-  assert:
-    status_code: 200
+steps:
+  - use: login/login.yaml::login_success
+  - use: product/product.yaml::product_list
+  - use: product/product.yaml::product_detail
+  - use: product/product.yaml::default_price
+  - use: user/user.yaml::user_center
+  - use: cart/cart.yaml::buy_now
+  - use: order/order.yaml::check_shipping
+  - use: user/address.yaml::get_default_address
+  - use: order/order.yaml::order_confirm

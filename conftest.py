@@ -41,6 +41,15 @@ def active_env(pytestconfig):
     yield {"name": env_name, "host": host} # 返回给这个fixture的测试
     mp.undo() # 恢复测试的环境
 
+
+@pytest.fixture(scope="class")
+def api_client():
+    """同一测试类复用一个 HTTP Session，并在测试结束后关闭。"""
+    client = request_module.RequestControl()
+    yield client
+    client.session.close()
+
+
 @pytest.fixture(scope= "class") # 自动执行不用参数配置、类清理
 def flow_context():
     """流程前后清空上下文"""

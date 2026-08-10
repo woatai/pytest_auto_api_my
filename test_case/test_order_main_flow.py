@@ -24,5 +24,5 @@ ORDER_MAIN_FLOW = [
 @pytest.mark.usefixtures("flow_context")
 class TestMainFlow:
     @allure.story("完整下单流程")
-    def test_order_main_flow(self):
-        run_flow_steps(ORDER_MAIN_FLOW)
+    def test_order_main_flow(self, api_client):
+        run_flow_steps(ORDER_MAIN_FLOW, client=api_client)

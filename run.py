@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
+import subprocess
 import sys
 import traceback
 import pytest
@@ -40,14 +40,25 @@ pytest 执行完成，退出码: {exit_code}
 """
         )
 
-        # 生成 Allure HTML 报告
-        os.system(f"allure generate {ALLURE_RESULT_DIR} -o {ALLURE_HTML_DIR} --clean")
+        # 生成可通过 file:// 直接打开的 Allure 单文件报告
+        subprocess.run(
+            [
+                "allure",
+                "generate",
+                ALLURE_RESULT_DIR,
+                "-o",
+                ALLURE_HTML_DIR,
+                "--clean",
+                "--single-file",
+            ],
+            check=True,
+        )
 
         print(
             f"""
 ========================================
 Allure HTML 报告已生成
-目录: {ALLURE_HTML_DIR}
+文件: {ALLURE_HTML_DIR}/index.html
 ========================================
 """
         )

@@ -3,7 +3,7 @@
 ## Project Overview
 
 - This repository is a lightweight API automation framework built around `pytest + requests + yaml + allure`.
-- The main business scenario is the order main flow in `data/order_main_flow.yaml`, executed step by step with shared context.
+- The main business scenario is the order main flow in `test_case/test_order_main_flow.py`, which calls module YAML cases step by step and keeps business decisions in Python.
 - The core runtime chain is: YAML case -> placeholder resolution -> HTTP request -> assertion -> extraction -> context storage.
 
 ## Project Structure & Ownership
@@ -15,7 +15,7 @@
 - `util/case_runner.py`: the preferred entry point for running a single YAML case by `yaml_name + case_id`.
 - `util/requestsUtils/requestControl.py`: request wrapper, host assembly, default headers, bearer token injection, and request debug info.
 - `util/assertion/assert_control.py`: unified assertion engine for `status_code` and JSONPath-based business assertions.
-- `util/extract/extract_control.py`: response extraction engine, including JSONPath extraction and `conditional_find`.
+- `util/extract/extract_control.py`: response extraction engine for plain JSONPath extraction.
 - `util/context/context_manager.py`: in-memory shared context used across a flow for values such as `token`, `product_id`, `unique`, and `cartId`.
 - `util/readFileUtils/`: YAML reading, case parsing, and placeholder replacement.
 - `common/config.yaml`: environment configuration and current default environment.
@@ -45,14 +45,14 @@
 - Use `${{variable_name}}` for placeholders. Resolve values through `ContextManager`.
 - Do not invent new function-style placeholders casually. Keep `${{host()}}` semantics aligned with `util/readFileUtils/placeholder.py`.
 - Use relative URLs such as `/login` and let `RequestControl` combine them with `HOST`.
-- Add `extract` rules for any values needed by later steps. The current main flow relies on values like `token`, `product_id`, `unique`, and `cartId`.
+- Add plain JSONPath `extract` rules for direct response values needed by later steps. Keep business selections such as choosing an in-stock `unique` in the Python flow test.
 
 ## Assertion & Extraction Rules
 
 - Give every API case at least one positive assertion. `status_code` is the minimum requirement.
 - Write JSON body assertions with the current structure: `jsonpath`, `type`, and `value`.
 - Only use assertion operators supported by `AssertControl`: `eq`, `==`, `equals`, `ne`, `!=`, `in`, `contains`, and `exists`.
-- Only use extraction rules supported by `ExtractControl`: plain JSONPath extraction and `conditional_find`.
+- Only use extraction rules supported by `ExtractControl`: plain JSONPath expressions.
 - If you extend assertion or extraction syntax, update the corresponding utility code and add coverage in `test_case/test_framework_basics.py`.
 
 ## Coding Style & Naming Conventions
@@ -76,7 +76,7 @@
 ## Testing Guidelines
 
 - Cover framework-level behavior in `test_case/test_framework_basics.py` whenever possible.
-- Cover flow-level behavior in YAML and exercise it through `test_case/test_order_main_flow.py`.
+- Cover single-interface request data and assertions in module YAML, and keep flow order and business decisions in `test_case/test_order_main_flow.py`.
 - Preserve context isolation by reusing existing fixtures such as `flow_context` and `case_context` when adding new tests.
 - For order main flow changes, protect the extraction chain across steps instead of validating each request in isolation only.
 - Before relying on a test module, confirm that pytest collects it. A file under `test_case/` is not enough if its function or method names do not start with `test_`. In the current repo state, `test_case/login/test_login.py` and `test_case/test_request.py` are examples of files that exist under `test_case/` but are not collected.

@@ -26,9 +26,7 @@ pytest_auto_api_my/
 │   ├── config.py      # 导出 HOST
 │   └── setting.py     # 路径工具
 │
-├── data/             # YAML 用例数据
-│   ├── login.yaml           # 登录用例
-│   └── order_main_flow.yaml # 下单主流程
+├── data/             # 按接口模块拆分的 YAML 用例数据
 │
 ├── util/             # 核心工具层
 │   ├── readFileUtils/  # YAML 读取与解析

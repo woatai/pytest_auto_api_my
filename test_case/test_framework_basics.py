@@ -73,32 +73,13 @@ def test_assert_control_runs_with_local_response():
     AssertControl(assert_data=assert_data, response=response).run()
 
 
-def test_extract_control_supports_jsonpath_and_conditional_find():
+def test_extract_control_supports_jsonpath():
     ContextManager.clear()
-    response_body = {
-        "data": {
-            "token": "token_123",
-            "productValue": [
-                {"stock": 0, "unique": "abc123"},
-                {"stock": 5, "unique": "def456"},
-            ],
-        }
-    }
+    response_body = {"data": {"token": "token_123"}}
 
     ExtractControl(
-        {
-            "token": "$.data.token",
-            "unique": {
-                "type": "conditional_find",
-                "source": "$.data.productValue",
-                "conditions": [{"field": "stock", "op": ">", "value": 0}],
-                "pick_field": "unique",
-                "pick": "first",
-                "required": True,
-            },
-        },
+        {"token": "$.data.token"},
         response_body,
     ).run()
 
     assert ContextManager.get("token") == "token_123"
-    assert ContextManager.get("unique") == "def456"

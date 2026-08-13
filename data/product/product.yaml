@@ -28,18 +28,6 @@ product_detail:
       jsonpath: $.msg
       type: in
       value: success
-  extract:
-    unique:
-      type: conditional_find
-      source: $.data.productValue
-      conditions:
-        - field: stock
-          op: ">"
-          value: 0
-      pick_field: unique
-      pick: first
-      required: true
-      error_message: 没有可用库存，无法下单
 
 default_price:
   name: 默认价格
